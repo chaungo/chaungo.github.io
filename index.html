@@ -1,17 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>360&deg; Image Gallery</title>
     <meta name="description" content="360&deg; Image Gallery - A-Frame">
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
-    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <script src="js/angular-aria.min.js"></script>
+    <script src="js/angular-material.min.js"></script>
+    <script src="js/app.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/angular-material.css"/>
+    <script src="js/aframe.min.js"></script>
+    <script src="js/aframe-animation-component.min.js"></script>
+    <script src="js/aframe-event-set-component.min.js"></script>
+    <script src="js/aframe-layout-component.min.js"></script>
+    <script src="js/aframe-template-component.min.js"></script>
     <script src="js/set-image.js"></script>
+
+
 </head>
-<body>
+<body ng-controller="AppCtrl" ng-app="App" ng-cloak>
+<md-toolbar style="position:fixed;" layout="row" layout-align="start center" md-whiteframe="5">
+    <div ng-style="{'color':'white'}" div class="md-toolbar-tools" layout="row" layout-align="start center">
+        <md-button ng-click="toggleSidenav()" class="md-icon-button" aria-label="Settings">
+            <md-icon aria-label="Menu" class="material-icons">menu</md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon aria-label="Menu" class="material-icons">home</md-icon>
+        </md-button>
+
+        <h2 align="center" flex md-truncate>TMA lab tour</h2>
+        <div>
+            <md-button class="md-icon-button" aria-label="More">
+                <md-icon aria-label="Menu" class="material-icons">search</md-icon>
+            </md-button>
+
+            <md-input-container>
+                <input ng-style="{'color':'white'}" ng-model="user.title">
+            </md-input-container>
+        </div>
+    </div>
+</md-toolbar>
+<md-sidenav flex=15 md-component-id="left" class="md-sidenav-left" md-is-locked-open="$mdMedia('')" flex
+            md-theme="dark-grey">
+    <md-list layout-fill layout="column" layout-align="center stretch">
+        <!-- List item-->
+        <md-list-item layout="column">
+            <md-button>
+                <div layout="column" layout-align="center center">
+                    <!--<img ng-src="ico/{{i}}.png" width="48px" height="48px"></img>-->
+                    <h2>Menu1</h2>
+                </div>
+            </md-button>
+            <md-button>
+                <div layout="column" layout-align="center center">
+                    <!--<img ng-src="ico/{{i}}.png" width="48px" height="48px"></img>-->
+                    <h2>Menu2</h2>
+                </div>
+            </md-button>
+
+        </md-list-item>
+    </md-list>
+</md-sidenav>
+
+
 <a-scene>
     <a-assets>
         <img id="city" crossorigin="anonymous" src="img/city.jpg">
@@ -62,5 +118,6 @@
                   raycaster="objects: .link"></a-cursor>
     </a-entity>
 </a-scene>
+
 </body>
 </html>
