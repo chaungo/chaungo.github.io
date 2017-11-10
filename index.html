@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>360&deg; Image Gallery</title>
-    <meta name="description" content="360&deg; Image Gallery - A-Frame">
+    <title>TMA lab tour</title>
+    <meta name="description" content="360&deg; TMA lab tour">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="css/angular-material.css"/>
+    <link rel="stylesheet" href="vendor/css/angular-material.css"/>
     <link rel="stylesheet" href="css/mystyle.css"/>
+
+    <script src="vendor/js/aframe.min.js"></script>
+    <script src="vendor/js/aframe-animation-component.min.js"></script>
+    <script src="vendor/js/aframe-event-set-component.min.js"></script>
+    <script src="vendor/js/aframe-layout-component.min.js"></script>
+    <script src="vendor/js/aframe-template-component.min.js"></script>
+
+    <script src="vendor/js/jquery-3.2.1.js"></script>
+    <!--script src="vendor/js/jquery.mobile-1.4.5.js"></script-->
 
     <script src="vendor/js/angular.js"></script>
     <script src="vendor/js/angular-animate.min.js"></script>
@@ -16,22 +25,20 @@
     <script src="vendor/js/angular-aria.min.js"></script>
     <script src="vendor/js/angular-material.min.js"></script>
 
-    <script src="vendor/js/aframe.min.js"></script>
-    <script src="vendor/js/aframe-animation-component.min.js"></script>
-    <script src="vendor/js/aframe-event-set-component.min.js"></script>
-    <script src="vendor/js/aframe-layout-component.min.js"></script>
-    <script src="vendor/js/aframe-template-component.min.js"></script>
-
     <script src="js/set-image.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/scene-gen.js"></script>
 
 
 </head>
-<body ng-controller="AppCtrl" ng-app="App" ng-cloak>
-<md-toolbar ng-style="{background: '#00A1E4'}" style="position:fixed;" layout="column" md-whiteframe="5">
-    <div class="md-toolbar-tools" layout="row" layout-align="start center" id="content">
+<body>
+<md-toolbar ng-controller="AppCtrl" ng-app="App" ng-cloak id="toolbar" style="min-height: 35px; position:fixed;"
+            ng-style="{background: '#00A1E4'}" layout="column"
+            md-whiteframe="8">
+    <div style="height: 35px" layout="row" layout-align="start center">
 
-        <md-button  class="md-icon-button" aria-label="Settings">
+        <md-button class="md-icon-button" aria-label="Settings">
             <md-icon style="color: white" aria-label="Menu" class="material-icons">home</md-icon>
         </md-button>
 
@@ -39,19 +46,19 @@
             <md-icon style="color: white" aria-label="Menu" class="material-icons">stars</md-icon>
         </md-button>
 
-        <md-button ng-click="clickSearch=!clickSearch" class="md-icon-button" aria-label="More">
+        <md-button ng-click="searchBarVis=!searchBarVis" class="md-icon-button" aria-label="More">
             <md-icon style="color: white" aria-label="Menu" class="material-icons">search</md-icon>
         </md-button>
 
         <h2 align="center" flex>TMA lab tour</h2>
 
-        <md-button ng-click="clickSearch=!clickSearch" class="md-icon-button" aria-label="More">
+        <md-button ng-click="" class="md-icon-button" aria-label="More">
             <md-icon style="color: white" aria-label="Menu" class="material-icons">info</md-icon>
         </md-button>
 
     </div>
 
-    <md-content layout="row" layout-align="start center" ng-hide="!clickSearch" layout-padding>
+    <md-content layout="row" layout-align="start center" ng-hide="!searchBarVis" layout-padding>
         <div>
             <md-input-container>
                 <label>Search</label>
@@ -59,93 +66,20 @@
             </md-input-container>
         </div>
 
-        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Card with image</span>
-                    <span class="md-subhead">Small</span>
-                </md-card-title-text>
-                <md-card-title-media>
-                    <div class="md-media-sm card-media"></div>
-                </md-card-title-media>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-            </md-card-actions>
+        <md-card md-whiteframe="6" style="max-width:300px; height: auto">
+            <img ng-src="img/thumb/doclap.jpg" class="md-card-image" style="max-height: 80px; width: auto">
+            <div layout-padding>
+                <div layout="column">
+                    <span layout-fill class="md-headline">Doc Lap building</span>
+                </div>
+                <div layout="row">
+                    <span layout-fill class="md-subhead">Historical place</span>
+                </div>
+            </div>
         </md-card>
-
-        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Card with image</span>
-                    <span class="md-subhead">Small</span>
-                </md-card-title-text>
-                <md-card-title-media>
-                    <div class="md-media-sm card-media"></div>
-                </md-card-title-media>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-            </md-card-actions>
-        </md-card>
-
     </md-content>
 </md-toolbar>
-
-
-
-<a-scene>
-    <a-assets>
-        <img id="city" crossorigin="anonymous" src="img/photo/city.jpg">
-        <img id="city-thumb" crossorigin="anonymous"
-             src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg">
-        <img id="cubes-thumb" crossorigin="anonymous"
-             src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-cubes.jpg">
-        <img id="sechelt-thumb" crossorigin="anonymous"
-             src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-sechelt.jpg">
-        <audio id="click-sound" crossorigin="anonymous"
-               src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
-        <img id="cubes" crossorigin="anonymous" src="img/photo/cubes.jpg">
-        <img id="sechelt" crossorigin="anonymous"
-             src="img/photo/sechelt.jpg">
-
-        <!-- Image link template to be reused. -->
-        <script id="link" type="text/html">
-            <a-entity class="link"
-                      geometry="primitive: plane; height: 1; width: 1"
-                      material="shader: flat; src: ${thumb}"
-                      event-set__1="_event: mousedown; scale: 1 1 1"
-                      event-set__2="_event: mouseup; scale: 1.2 1.2 1"
-                      event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
-                      event-set__4="_event: mouseleave; scale: 1 1 1"
-                      set-image="on: click; target: #image-360; src: ${src}"
-                      sound="on: click; src: #click-sound"></a-entity>
-        </script>
-    </a-assets>
-
-    <!-- 360-degree image. -->
-    <a-sky id="image-360" radius="10" src="#city"></a-sky>
-
-    <!-- Image links. -->
-    <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
-        <a-entity template="src: #link" data-src="#cubes" data-thumb="#cubes-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#city" data-thumb="#city-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#sechelt" data-thumb="#sechelt-thumb"></a-entity>
-    </a-entity>
-
-    <!-- Camera + cursor. -->
-    <a-entity camera look-controls>
-        <a-cursor id="cursor"
-                  animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
-                  animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
-                  event-set__1="_event: mouseenter; color: springgreen"
-                  event-set__2="_event: mouseleave; color: black"
-                  fuse="true"
-                  raycaster="objects: .link"></a-cursor>
-    </a-entity>
-</a-scene>
+<code id="putScene"></code>
 
 </body>
 </html>

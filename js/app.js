@@ -1,11 +1,9 @@
 var app = angular.module('App', ['ngMaterial', 'ngResource', 'ngAnimate']);
-app.config(function ($mdThemingProvider) {
-    $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('red');
 
-});
-
-app.controller('AppCtrl', function ($scope, $mdSidenav) {
-    $scope.toggleSidenav = function () {
-        return $mdSidenav('left').toggle();
-    };
+app.controller('AppCtrl', function ($scope, $http,$resource) {
+    $scope.searchBarVis = false;
+    $resource('js/data.json').get().$promise.then(function(data) {
+        $scope.data = data;
+        console.log($scope.data.scene);
+    });
 });
