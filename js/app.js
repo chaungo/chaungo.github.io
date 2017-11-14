@@ -6,4 +6,7 @@ app.controller('AppCtrl', function ($scope, $http,$resource) {
         $scope.data = data;
         console.log($scope.data.scene);
     });
+
+    $scope.search
+
 });
